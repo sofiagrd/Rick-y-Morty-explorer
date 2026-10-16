@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101a22">
+  <title>Rick & Morty Explorer</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://rickandmortyapi.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Inicio">
+      <span class="portal-logo">R&M</span>
+      <span>DIMENSION<span class="accent"> X</span></span>
+    </a>
+    <nav>
+      <a href="#explorar">Explorar</a>
+      <a href="#recomendados">Descubrir</a>
+      <a href="#planificador">Mi plan</a>
+    </nav>
+    <button id="themeToggle" class="theme-btn" aria-label="Cambiar tema">
+      ☀️ / 🌙
+    </button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <span class="eyebrow">MULTIVERSO • ARCHIVO INTERDIMENSIONAL</span>
+        <h1>RICK & MORTY<br><span>EXPLORER</span></h1>
+        <p>Todos los universos. Todos los personajes.
+          Infinitas posibilidades.</p>
+        <a href="#explorar" class="primary-btn">Abrir portal ↗</a>
+        <div class="hero-stats">
+          <div><strong id="totalCount">---</strong><span>Personajes encontrados</span></div>
+          <div><strong>∞</strong><span>Universos por explorar</span></div>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="portal portal-back"></div>
+        <div class="portal portal-front">
+          <span>R&M</span>
+        </div>
+        <span class="floating f1">C-137</span>
+        <span class="floating f2">WUBBA LUBBA DUB DUB!</span>
+        <span class="floating f3">⚡</span>
+      </div>
+    </section>
+
+    <section id="explorar" class="section">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">BASE DE DATOS GALÁCTICA</span>
+          <h2>Explorador de personajes</h2>
+        </div>
+        <span id="resultLabel" class="result-label">Cargando multiverso...</span>
+      </div>
+
+      <div class="search-bar">
+        <span>⌕</span>
+        <input id="searchInput" type="search"
+          placeholder="Busca a Rick, Morty, Birdperson..."
+          autocomplete="off">
+        <button id="searchBtn" class="primary-btn">Buscar</button>
+      </div>
+
+      <div class="filters">
+        <label>Estado
+          <select id="statusFilter">
+            <option value="">Todos</option>
+            <option value="alive">Vivo</option>
+            <option value="dead">Muerto</option>
+            <option value="unknown">Desconocido</option>
+          </select>
+        </label>
+        <label>Especie
+          <select id="speciesFilter">
+            <option value="">Todas las especies</option>
+            <option>Human</option>
+            <option>Alien</option>
+            <option>Humanoid</option>
+            <option>Robot</option>
+            <option>Animal</option>
+            <option>Mythological Creature</option>
+            <option>Poopybutthole</option>
+            <option>Unknown</option>
+          </select>
+        </label>
+        <label>Género
+          <select id="genderFilter">
+            <option value="">Todos</option>
+            <option value="female">Femenino</option>
+            <option value="male">Masculino</option>
+            <option value="genderless">Sin género</option>
+            <option value="unknown">Desconocido</option>
+          </select>
+        </label>
+        <button id="clearFilters" class="secondary-btn">↺ Limpiar</button>
+      </div>
+
+      <div id="characterGrid" class="character-grid">
+        <div class="loading">Abriendo portal interdimensional...</div>
+      </div>
+
+      <div class="pagination">
+        <button id="prevPage" class="secondary-btn" disabled>← Anterior</button>
+        <span id="pageInfo">Página 1</span>
+        <button id="nextPage" class="secondary-btn">Siguiente →</button>
+      </div>
+    </section>
+
+    <section id="recomendados" class="section recommendations">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">¿NO SABES A QUIÉN BUSCAR?</span>
+          <h2>Señales del multiverso</h2>
+        </div>
+        <button id="randomBtn" class="secondary-btn">⟳ Nuevas señales</button>
+      </div>
+      <p class="muted">Tres personajes elegidos al azar para tu próxima aventura.</p>
+      <div id="recommendationGrid" class="recommendation-grid"></div>
+    </section>
+
+    <section id="planificador" class="section planner">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">TU BITÁCORA INTERDIMENSIONAL</span>
+          <h2>Planificador de exploración</h2>
+        </div>
+        <span id="planCount" class="result-label">0 personajes</span>
+      </div>
+      <p class="muted">Guarda personajes para investigarlos después.
+        Tu lista se conserva en este navegador.</p>
+      <div id="plannerList" class="planner-list"></div>
+      <button id="clearPlan" class="secondary-btn">Vaciar planificación</button>
+    </section>
+  </main>
+
+  <footer>
+    <div class="portal-logo">R&M</div>
+    <p>Una pequeña aventura por el multiverso.</p>
+    <p class="muted">Datos proporcionados por Rick and Morty API.
+      Proyecto de fans, no oficial.</p>
+    <a href="https://rickandmortyapi.com/documentation" target="_blank"
+       rel="noreferrer">Documentación de la API ↗</a>
+  </footer>
+
+  <dialog id="characterDialog">
+    <button id="closeDialog" class="dialog-close" aria-label="Cerrar">✕</button>
+    <div id="characterDetails"></div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
